@@ -23,11 +23,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvVehicleInfo: TextView
 
     private val vehicleList = mutableListOf(
-        Vehicle("Toyota", true, 1500, 4, R.drawable.supra),
-        Vehicle("Honda", false, 300, 2, R.drawable.civic),
-        Vehicle("BMW", true, 2000, 4, R.drawable.f90),
-        Vehicle("Harley Davidson", false, 500, 2, R.drawable.harley),
-        Vehicle("Ford", true, 1800, 4, R.drawable.focus)
+        Vehicle("Mercedes-Benz S-Class", true, 560, 2, R.drawable.mercedes),
+        Vehicle("Tesla Model S", true, 580, 2, R.drawable.tesla),
+        Vehicle("Land Rover Defender", true, 900, 2, R.drawable.land_rover),
+        Vehicle("Porsche 911", true, 390, 2, R.drawable.porsche),
+        Vehicle("Ducati Panigale V4", false, 180, 2, R.drawable.ducati)
     )
 
     private lateinit var adapter: CustomSpinnerAdapter
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             val axles = etAxles.text.toString()
                 .takeIf { it.isNotEmpty() }?.toIntOrNull() ?: DEFAULT_AXLES
 
-            val newVehicle = Vehicle(name, isCar, capacity, axles, R.drawable.default_image)
+            val newVehicle = Vehicle(name, isCar, capacity, axles, R.drawable.default_pic)
 
             vehicleList.add(newVehicle)
             adapter.notifyDataSetChanged()
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val DEFAULT_CAPACITY = 1000
+        private const val DEFAULT_CAPACITY = 1488
         private const val DEFAULT_AXLES = 2
     }
 }
