@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="buton">
+        <item name="backgroundTint">@color/black</item>
+        <item name="fontFamily">casual</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:elevation">10dp</item>
+    </style>
+
+    <style name="text_1">
+        <item name="android:textColor">#818181</item>
+        <item name="fontFamily">casual</item>
+    </style>
+</resources>
