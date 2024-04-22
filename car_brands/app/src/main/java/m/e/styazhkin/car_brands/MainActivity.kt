@@ -1,8 +1,10 @@
 package m.e.styazhkin.car_brands
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         btnAdd = findViewById(R.id.btn_add)
         btnInfo = findViewById(R.id.btn_info)
         tvVehicleInfo = findViewById(R.id.tv_vehicle_info)
+        tvVehicleInfo.movementMethod = ScrollingMovementMethod.getInstance()
 
         adapter = CustomSpinnerAdapter(this, vehicleList)
         spinner.adapter = adapter
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
+
         btnAdd.setOnClickListener {
             showAddDialog()
         }
@@ -59,13 +63,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateInfo(position: Int) {
+    @SuppressLint("SetTextI18n")
+    fun updateInfo(position: Int) {
         val vehicle = vehicleList[position]
         val type = if (vehicle.isCar) "Автомобиль" else "Мотоцикл"
-        tvVehicleInfo.text = "Наименование: ${vehicle.name}\n" +
+        val positionText = "Позиция ${position + 1} из ${vehicleList.size}\n"  // Позиция +1, потому что индексация начинается с 0
+        val vehicleInfo = "Наименование: ${vehicle.name}\n" +
                 "Тип: $type\n" +
                 "Грузоподъемность: ${vehicle.capacity}\n" +
                 "Количество осей: ${vehicle.axles}"
+        tvVehicleInfo.text = "$positionText$vehicleInfo"
+        tvVehicleInfo.setBackgroundColor(generateRandomColor())  // Если нужно изменить цвет при каждом выборе
     }
 
     private fun showAddDialog() {
@@ -86,7 +94,8 @@ class MainActivity : AppCompatActivity() {
             val axles = etAxles.text.toString()
                 .takeIf { it.isNotEmpty() }?.toIntOrNull() ?: DEFAULT_AXLES
 
-            val newVehicle = Vehicle(name, isCar, capacity, axles)
+            val newVehicle = Vehicle(name, isCar, capacity, axles, R.drawable.default_image)
+
             vehicleList.add(newVehicle)
             adapter.notifyDataSetChanged()
         }
@@ -99,18 +108,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showInfo() {
-        val position = spinner.selectedItemPosition
+        val position = spinner.selectedItemPosition + 1  // +1, так как позиции начинаются с 0
         val totalItems = vehicleList.size
 
-        if (position >= 0 && position < totalItems) {
-            val vehicle = vehicleList[position]
+        if (position > 0 && position <= totalItems) {
+            val vehicle = vehicleList[position - 1]  // Сдвиг на -1, так как список начинается с 0
             val type = if (vehicle.isCar) "Автомобиль" else "Мотоцикл"
-            val infoText = "Наименование: ${vehicle.name}\n" +
+            val infoText = "Позиция $position из $totalItems\nНаименование: ${vehicle.name}\n" +
                     "Тип: $type\n" +
                     "Грузоподъемность: ${vehicle.capacity}\n" +
                     "Количество осей: ${vehicle.axles}"
             tvVehicleInfo.text = infoText
             tvVehicleInfo.setBackgroundColor(generateRandomColor())
+        } else {
+            tvVehicleInfo.text = "Выберите транспортное средство"
         }
     }
 

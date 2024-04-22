@@ -54,9 +54,19 @@ class CustomSpinnerAdapter(private val context: Context, private val itemList: M
         dialogBuilder.setTitle("Удалить элемент?")
             .setMessage("Вы уверены, что хотите удалить этот элемент?")
             .setPositiveButton("Удалить") { _, _ ->
-                itemList.removeAt(position)
-                notifyDataSetChanged()
-                Toast.makeText(context, "Элемент удален", Toast.LENGTH_SHORT).show()
+                if (itemList.size > 1) {
+                    itemList.removeAt(position)
+                    notifyDataSetChanged()
+
+                    if (context is MainActivity) {
+                        val newPos = if (position < itemList.size) position else position - 1
+                        context.updateInfo(newPos)
+                    }
+
+                    Toast.makeText(context, "Элемент удален", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Невозможно удалить последний элемент", Toast.LENGTH_SHORT).show()
+                }
             }
             .setNegativeButton("Отмена") { dialog, _ -> dialog.dismiss()
             }
