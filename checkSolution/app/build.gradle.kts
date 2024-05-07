@@ -7,6 +7,10 @@ android {
     namespace = "m.e.styazhkin.checksolution"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "m.e.styazhkin.checksolution"
         minSdk = 24
