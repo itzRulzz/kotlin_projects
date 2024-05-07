@@ -39,16 +39,13 @@ class MainActivity : AppCompatActivity() {
 
     // Функция для установки цвета и задержки его сброса
     private fun setBackgroundColor(isCorrect: Boolean, nextAction: () -> Unit) {
-        // Определение цвета фона в зависимости от правильности ответа
         val color = if (isCorrect) android.R.color.holo_green_light else android.R.color.holo_red_light
         binding.vvvod.setBackgroundColor(resources.getColor(color, null))
 
-        // Создаем новый Handler привязанный к главному потоку
         Handler(Looper.getMainLooper()).postDelayed({
-            // Сброс цвета к прозрачному
             binding.vvvod.setBackgroundColor(resources.getColor(android.R.color.transparent, null))
-            nextAction()  // Вызов функции для обновления примера
-        }, 2000)  // Задержка в 2000 миллисекунд (2 секунды)
+            nextAction()
+        }, 2000)
     }
 
     private fun generatePrimer() {
@@ -88,59 +85,58 @@ class MainActivity : AppCompatActivity() {
             binding.vvvod.text = wrongResult.toString()
         }
 
+        startTime = System.currentTimeMillis()
+
         proverPrimer(binding.vvvod.text.toString().toDouble(), correctResult.toDouble())
     }
 
     private fun proverPrimer(result: Double, correct: Double) {
         binding.loseButton.setOnClickListener {
             val isCorrect = result != correct
+            time() // Фиксируем время ответа
             setBackgroundColor(isCorrect) {
-                if (isCorrect) {
-                    right++  // Пользователь нажал "Неверно", и это был верный выбор, т.е. пример действительно неверный
-                } else {
-                    lose++  // Пользователь ошибся, пример был верный
-                }
+                if (isCorrect) right++ else lose++
                 all++
-                time()
                 voodoo()
-                generatePrimer()
+                // Задержка перед генерацией нового примера
+                Handler(Looper.getMainLooper()).postDelayed({
+                    generatePrimer()
+                }, 2000)
             }
         }
 
         binding.reightButton.setOnClickListener {
             val isCorrect = result == correct
+            time() // Фиксируем время ответа
             setBackgroundColor(isCorrect) {
-                if (isCorrect) {
-                    right++  // Пользователь нажал "Верно" и это был верный выбор
-                } else {
-                    lose++  // Пользователь ошибся, пример был неверный
-                }
+                if (isCorrect) right++ else lose++
                 all++
-                time()
                 voodoo()
-                generatePrimer()
+                // Задержка перед генерацией нового примера
+                Handler(Looper.getMainLooper()).postDelayed({
+                    generatePrimer()
+                }, 2000)
             }
         }
     }
 
-    private val timeIntervals = mutableListOf<Long>()
-    private fun time(){
+    private val timeIntervals = mutableListOf<Double>()
+    private fun time() {
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime
-        startTime = System.currentTimeMillis()
-        val seconds = elapsedTime / 1000 % 10
+        val seconds = elapsedTime / 1000.0
 
         timeIntervals.add(seconds)
 
-        val maxTime = timeIntervals.maxOrNull() ?: 0
-        val minTime = timeIntervals.minOrNull() ?: 0
-
-        binding.maxNull.text = maxTime.toString()
-        binding.minNull.text = minTime.toString()
-
+        val maxTime = timeIntervals.maxOrNull() ?: 0.0
+        val minTime = timeIntervals.minOrNull() ?: 0.0
         val averageTime = timeIntervals.average()
+
+        binding.maxNull.text = String.format("%.2f", maxTime)
+        binding.minNull.text = String.format("%.2f", minTime)
         binding.credeeNull.text = String.format("%.2f", averageTime)
     }
+
     private fun voodoo(){
         binding.itogoNull.text = all.toString()
         binding.rightNull.text = right.toString()
