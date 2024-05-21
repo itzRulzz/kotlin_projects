@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/computerChoiceImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="16dp" />
+
+    <ImageView
+        android:id="@+id/playerChoiceImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/buttonRock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="КАМЕНЬ"
+            android:layout_margin="4dp" />
+
+        <Button
+            android:id="@+id/buttonPaper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="БУМАГА"
+            android:layout_margin="4dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/buttonScissors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="НОЖНИЦЫ"
+            android:layout_margin="4dp" />
+
+        <Button
+            android:id="@+id/buttonLizard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ЯЩЕРИЦА"
+            android:layout_margin="4dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonSpock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="СПОК"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ИГРА" />
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
